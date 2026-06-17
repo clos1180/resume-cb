@@ -492,6 +492,22 @@
         </div>
       </div>
     </div>
+<!-- Visitor Counter -->
+<div id="visitor-counter" style="
+  position: absolute;
+  bottom: 16px;
+  right: 52px;
+  z-index: 2;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 0.75rem;
+  color: rgb(115,204,0);
+  letter-spacing: 0.08em;
+">
+  <span style="width:6px;height:6px;border-radius:50%;background:#0AACCC;display:inline-block;"></span>
+  <span id="visit-count"><b>Loading...<b></span>
+</div>
   </header>
 
   <div class="body">
@@ -686,5 +702,27 @@
   </div>
 
 </div>
+<script>
+  // Increment and display a global visitor count using CountAPI
+  // CountAPI is free and requires no account or API key.
+  // Replace YOUR_NAME and YOUR_PAGE with anything unique to you.
+
+  const COUNT_URL =
+    "https://api.countapi.xyz/hit/carlos-bailey-resume/visits";
+
+  const el = document.getElementById("visit-count");
+
+  fetch(COUNT_URL)
+    .then(res => res.json())
+    .then(data => {
+      el.textContent = data.value.toLocaleString() + " VISITORS";
+    })
+    .catch(() => {
+      // Fallback: use localStorage so it still works offline
+      let count = parseInt(localStorage.getItem("visit_count") || "0") + 1;
+      localStorage.setItem("visit_count", count);
+      el.textContent = count.toLocaleString() + " VISITORS";
+    });
+</script>
 </body>
 </html>
